@@ -1,0 +1,66 @@
+{% extends 'common/base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    {% include 'common/nav.html' %}
+
+    <div class="container">
+        {% include 'events/search-form.html' %}
+        <div class="events">
+            {% for event in events %}
+                <a id="event-url" href="{% url 'event_details' event.pk %}">
+                <div class="event">
+                    <h4>{{ event.name }}</h4>
+                    <h4>{{ event.date }}</h4>
+                    <h4>{{ event.location }}</h4>
+                    <h4>{{ event.description }}</h4>
+                    <h4>Created by: {{ event.created_at| date:"d-M-Y" }}</h4>
+                    {#                        {% if not event.approved %}#}
+                    {#                            {% if 'events.can_approve_events' in request.user.get_group_permissions or perms.posts.can_do_approve %}#}
+                    {#                                <a href="{% url 'approve' event.pk %}"><i class="ai-check"></i></a>#}
+                    {#                            {% endif %}#}
+                    {#                        {% endif %}#}
+
+                </div>
+                {% if not events %}
+                    <h1>No published events yet</h1>
+                {% endif %}
+
+            {% empty %}
+                <h1 class="no-posts">No Events</h1>
+            {% endfor %}
+
+            </a>
+        </div>
+
+        <form method="post" class="form-inline">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <div class="input-group">
+                {% for form in formset %}
+                    <div class="form-row">
+                        {{ form.created_by|as_crispy_field }}
+                        <div class="input-group-append">
+                            {{ form.description|as_crispy_field }}
+                            <button class="btn btn-primary ml-2" type="submit">Post</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+
+        <h2>Comments</h2>
+        <div class="comments-section">
+            {% for event in events.comments.all %}
+                <div class="media mb-3 comment-item">
+                    <img src="https://via.placeholder.com/50" class="mr-3 rounded-circle comment-avatar"
+                         alt="User avatar">
+                    <div class="media-body comment-content">
+                        <h5 class="mt-0 comment-author">{{ comment.author }}</h5>
+                        <p class="comment-text">{{ comment.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
