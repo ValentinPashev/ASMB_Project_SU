@@ -11,15 +11,16 @@
                 <a id="event-url" href="{% url 'event_details' event.pk %}">
                 <div class="event">
                     <h4>{{ event.name }}</h4>
-                    <h4>{{ event.date }}</h4>
-                    <h4>{{ event.location }}</h4>
-                    <h4>{{ event.description }}</h4>
-                    <h4>Created by: {{ event.created_at| date:"d-M-Y" }}</h4>
-                    {#                        {% if not event.approved %}#}
-                    {#                            {% if 'events.can_approve_events' in request.user.get_group_permissions or perms.posts.can_do_approve %}#}
-                    {#                                <a href="{% url 'approve' event.pk %}"><i class="ai-check"></i></a>#}
-                    {#                            {% endif %}#}
-                    {#                        {% endif %}#}
+                    {% if not event.approved %}
+                        {% if 'event.can_approve_events' in request.user.get_group_permissions or perms.events.can_do_approve %}
+                            <a href="{% url 'approve' event.pk %}"><i class="ai-check"></i></a>
+                        {% endif %}
+                    {% endif %}
+
+{#                    <h4>{{ event.date }}</h4>#}
+{#                    <h4>{{ event.location }}</h4>#}
+{#                    <h4>{{ event.description }}</h4>#}
+{#                    <h4>Created by: {{ event.created_at| date:"d-M-Y" }}</h4>#}
 
                 </div>
                 {% if not events %}

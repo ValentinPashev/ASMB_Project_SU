@@ -46,7 +46,7 @@
     </li>
 </ul>
 
-{##}
-{#<form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">#}
-{#    {% csrf_token %}#}
-{#</form>#}
+
+<form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
+    {% csrf_token %}
+</form>

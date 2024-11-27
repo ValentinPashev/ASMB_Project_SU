@@ -31,6 +31,11 @@ class SearchForm(forms.Form):
 class EventDetailsForm(EventBaseForm):
     pass
 
+class EditEventForm(EventBaseForm):
+    pass
+
+class DeleteEventForm(EventBaseForm, DisableFieldsMixin):
+    disabled_fields = ('__all__',)
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -64,11 +69,5 @@ class CommentForm(forms.ModelForm):
             'placeholder': 'Add message...',
             'rows': 1,
         })
-
-class EditEventForm(EventBaseForm):
-    pass
-
-class DeleteEventForm(EventBaseForm, DisableFieldsMixin):
-    disabled_fields = ('__all__',)
 
 CommentFormSet = formset_factory(CommentForm, extra=1)

@@ -29,12 +29,23 @@ class DashboardView(ListView, FormView):
     def get_queryset(self):
         queryset = self.model.objects.all()
 
+
+        if 'events.can_approve_events' not in self.request.user.get_group_permissions() or not self.request.user.has_perm('events.can_approve_events'):
+            queryset = queryset.filter(approved=True)
+
         if 'query' in self.request.GET:
             query = self.request.GET.get('query')
             queryset = self.queryset.filter(title__icontains=query)
 
         return queryset
 
+
+def approve_event(request, pk):
+    event = Event.objects.get(pk=pk)
+    event.approved = True
+    event.save()
+
+    return redirect(request.META.get('HTTP_REFERER'))
 
 class EventDetailsView(DetailView):
     model = Event
@@ -43,6 +54,7 @@ class EventDetailsView(DetailView):
     def get_context_data(self, **kwargs):
         print(EventDetailsView.__mro__)
         context = super().get_context_data(**kwargs)
+        context['formset'] = CommentFormSet()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -56,7 +68,7 @@ class EventDetailsView(DetailView):
                     comment.event = event
                     comment.save()
 
-            return redirect('event-details', pk=event.id)
+            return redirect('event_details', pk=event.id)
 
         context = self.get_context_data(**kwargs)
         context['formset'] = formset

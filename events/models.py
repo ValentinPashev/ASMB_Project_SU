@@ -30,7 +30,14 @@ class Event(models.Model):
         blank=True
     )
 
+    approved = models.BooleanField(
+        default=False
+    )
 
+    class Meta:
+        permissions = [
+            ('can_approve_events', 'Can approve event'),
+        ]
     def __str__(self):
         return self.name
 
