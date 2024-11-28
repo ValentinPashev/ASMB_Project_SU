@@ -28,6 +28,7 @@ class DashboardView(ListView, FormView):
 
     def get_queryset(self):
         queryset = self.model.objects.all()
+        print(self.request.user.get_user_permissions())
 
 
         if 'events.can_approve_events' not in self.request.user.get_group_permissions() or not self.request.user.has_perm('events.can_approve_events'):
@@ -52,7 +53,6 @@ class EventDetailsView(DetailView):
     template_name = 'events/event-details.html'
 
     def get_context_data(self, **kwargs):
-        print(EventDetailsView.__mro__)
         context = super().get_context_data(**kwargs)
         context['formset'] = CommentFormSet()
         return context
