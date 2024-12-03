@@ -7,7 +7,7 @@ def user_info(user):
 
     if user.is_authenticated:
         return {
-            'user': user.first_name,
+            'user': user.username,
         }
 
     return {

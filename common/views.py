@@ -12,7 +12,7 @@ class IndexView(TemplateView):
         if self.request.user.is_authenticated:
             context = {
                 'time_now': datetime.now(),
-                'user': self.request.user.first_name,
+                'user': self.request.user.username,
             }
 
             return context

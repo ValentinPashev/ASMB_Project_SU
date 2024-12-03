@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'students.apps.StudentsConfig',
     'events.apps.EventsConfig',
-    'SoftUDjangoProject.accounts.apps.AccountsConfig',
+    'accounts.apps.AccountsConfig',
     'common.apps.CommonConfig',
 
     "crispy_forms",
@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'SoftUDjangoProject.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "custom_project_exam",
+        "NAME": "soft_database_4",
         "USER": "postgres",
         "PASSWORD": "levskisofia1914",
         "HOST": "127.0.0.1",
@@ -94,7 +94,7 @@ DATABASES = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'SoftUDjangoProject.accounts.authentication.EmailOrUsernameBackend',
+    'accounts.authentication.EmailOrUsernameBackend',
     "django.contrib.auth.backends.ModelBackend",
 ]
 
@@ -148,6 +148,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = 'accounts.CustomStudent'
+AUTH_USER_MODEL = 'accounts.AppStudent'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')

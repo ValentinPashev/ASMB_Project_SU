@@ -1,7 +1,5 @@
 from django.db import models
 
-from SoftUDjangoProject.accounts.models import Profile
-
 
 class Event(models.Model):
     name = models.CharField(
