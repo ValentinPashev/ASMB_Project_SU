@@ -1,5 +1,3 @@
-
-
 from django.forms import modelform_factory
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -9,7 +7,6 @@ from events.models import Event
 
 
 # Create your views here.
-
 
 class CreateEventView(CreateView):
     model = Event
@@ -22,7 +19,7 @@ class DashboardView(ListView, FormView):
     template_name = 'events/dashboard.html'
     context_object_name = 'events'
     form_class = SearchForm
-    paginate_by = 2
+    paginate_by = 8
     model = Event
     success_url = reverse_lazy('dash')
 
@@ -100,3 +97,8 @@ class DeleteEventView(DeleteView, FormView):
         event = Event.objects.get(pk=pk)
         return event.__dict__
 
+#
+# def example_view(request):
+#     user = request.user
+#     current_user_profile = user.profile.first_name
+#     print(current_user_profile)

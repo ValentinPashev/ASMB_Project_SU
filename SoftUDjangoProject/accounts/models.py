@@ -22,7 +22,6 @@ class Profile(models.Model):
     user = models.OneToOneField(
         CustomStudent,
         on_delete=models.CASCADE,
-        related_name='user',
     )
 
     first_name = models.CharField(

@@ -11,12 +11,14 @@
             <span>Dashboard</span>
         </a>
     </li>
-    <li class="menu-item">
-        <a href="{% url 'create_event' %}" class="menu-link">
-            <i class="ai-circle-plus"></i>
-            <span>Create Event</span>
-        </a>
-    </li>    
+    {% if request.user.is_authenticated %}
+        <li class="menu-item">
+            <a href="{% url 'create_event' %}" class="menu-link">
+                <i class="ai-circle-plus"></i>
+                <span>Create Event</span>
+            </a>
+        </li>
+    {% endif %}
     {% if not request.user.is_authenticated %}
     <li class="menu-item">
         <a href="{% url 'login' %}" class="menu-link">

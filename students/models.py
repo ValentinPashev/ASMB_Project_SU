@@ -14,7 +14,7 @@ class Student(models.Model):
         max_length=100
     )
 
-    user = models.ForeignKey(
-        to=UserModel,
-        on_delete=models.CASCADE,
-    )
+    # user = models.ForeignKey(
+    #     to=UserModel,
+    #     on_delete=models.CASCADE,
+    # )
