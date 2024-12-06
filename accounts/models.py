@@ -17,6 +17,11 @@ class AppStudent(AbstractBaseUser, PermissionsMixin):
         unique=True,
     )
 
+    faculty_number = models.CharField(
+        max_length=25,
+        unique=True,
+    )
+
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -44,6 +49,7 @@ class Profile(models.Model):
     user = models.OneToOneField(
         AppStudent,
         on_delete=models.CASCADE,
+        related_name="profile",
     )
 
     first_name = models.CharField(
@@ -52,12 +58,6 @@ class Profile(models.Model):
 
     last_name = models.CharField(
         max_length=100
-    )
-
-    faculty_number = models.CharField(
-        max_length=25,
-        unique=True,
-        default='',
     )
 
     branch = models.CharField(

@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASMB</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body>
+    <div class="profile-container">
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-image">
+                <img src="https://via.placeholder.com/150" alt="Profile Picture">
+            </div>
+            <div class="profile-details">
+                <h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
+                <p>Branch: {{ profile.branch }}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -11,5 +11,4 @@ def create_profile(sender, instance:UserModel, created:bool, **kwargs):
     if created:
         Profile.objects.create(
             user=instance,
-
         )

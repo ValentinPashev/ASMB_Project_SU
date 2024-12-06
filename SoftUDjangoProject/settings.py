@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'SoftUDjangoProject.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "soft_database_4",
+        "NAME": "soft_uni_asmb_project",
         "USER": "postgres",
         "PASSWORD": "levskisofia1914",
         "HOST": "127.0.0.1",
