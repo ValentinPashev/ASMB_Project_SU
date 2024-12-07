@@ -1,3 +1,4 @@
+{% extends 'common/base.html' %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -8,18 +9,28 @@
     <title>ASMB</title>
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 </head>
+{% block content %}
 <body>
     <div class="profile-container">
         <!-- Profile Card -->
         <div class="profile-card">
             <div class="profile-image">
-                <img src="https://via.placeholder.com/150" alt="Profile Picture">
+                {% if profile.profile_picture %}
+                    <img src="{{ profile.profile_picture.url }}" alt="Profile Picture"
+                         style="width: 150px; height: 150px; border-image: 50%;">
+                {% else %}
+                    <img src="https://via.placeholder.com/150" alt="Default Profile Picture"
+                         style="width: 150px; height: 150px; border-radius: 50%;">
+                {% endif %}
+
             </div>
             <div class="profile-details">
                 <h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
-                <p>Branch: {{ profile.branch }}</p>
+                <p>Клон: {{ profile.branch }}</p>
+                <p>Точки от събития: {{ profile.points_from_events }}</p>
             </div>
         </div>
     </div>
 </body>
+{% endblock %}
 </html>

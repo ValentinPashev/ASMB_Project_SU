@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1>Попълнете профила си</h1>
-<form action="{% url 'update_profile' %}" method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form }}
     <button class="btn btn-primary ml-2" type="submit">Post</button>

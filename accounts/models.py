@@ -68,3 +68,9 @@ class Profile(models.Model):
     points_from_events = models.IntegerField(
         default=0
     )
+
+    profile_picture = models.ImageField(
+        upload_to="media_files",
+        blank=True,
+        null=True,
+    )

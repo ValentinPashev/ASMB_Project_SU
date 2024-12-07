@@ -1,5 +1,6 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.contrib.auth import login
+from django.http import HttpResponseRedirect
+from django.shortcuts import  render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from accounts.forms import CustomStudentFrom, ProfileCreationForm
@@ -12,8 +13,7 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('index')
 
 
-
-def create_profile_view(request):
+def create_profile_or_display_view(request):
     profile = request.user.profile
 
     is_profile_complete = all([
@@ -31,7 +31,7 @@ def create_profile_view(request):
     else:
 
         if request.method == 'POST':
-            form = ProfileCreationForm(request.POST, instance=profile)
+            form = ProfileCreationForm(request.POST, request.FILES, instance=profile)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse_lazy('index'))
