@@ -1,4 +1,5 @@
 from django.forms import modelform_factory
+from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, FormView, DetailView, UpdateView, DeleteView
@@ -13,6 +14,10 @@ class CreateEventView(CreateView):
     form_class = CreateEventForm
     template_name = 'events/create-event-template.html'
     success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user.profile
+        return super().form_valid(form)
 
 
 class DashboardView(ListView, FormView):
@@ -91,6 +96,18 @@ class DeleteEventView(DeleteView, FormView):
     template_name = 'events/delete-event.html'
     form_class = DeleteEventForm
     success_url = reverse_lazy('dash')
+
+    def dispatch(self, request, *args, **kwargs):
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        event = self.get_object()
+        profile = self.request.user.profile
+
+        if event.created_by != profile.__str__() and not self.request.user.is_superuser:
+            return HttpResponseForbidden("You do not have permission to delete this event.")
+
+        return super().dispatch(request, *args, **kwargs)
+
+
 
     def get_initial(self):
         pk = self.kwargs.get(self.pk_url_kwarg)

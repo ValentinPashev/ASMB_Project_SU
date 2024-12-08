@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models import ForeignKey
+
+from accounts.models import Profile
 
 
 class Event(models.Model):
@@ -23,9 +26,10 @@ class Event(models.Model):
     )
 
     created_by = models.CharField(
-        max_length=150,
-        null=True,
-        blank=True
+        models.ForeignKey(
+            Profile,
+            on_delete=models.CASCADE
+        )
     )
 
     approved = models.BooleanField(

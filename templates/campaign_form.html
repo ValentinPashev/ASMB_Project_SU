@@ -4,13 +4,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Events</title>
-    
+    <title>Campaigns</title>
 </head>
 <body>
 {% block content %}
-    <title>Event Report</title>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {{ form }}
         {% csrf_token %}
         <button class="button-9">Submit</button>

@@ -8,7 +8,7 @@ from events.models import Event, Comment
 class EventBaseForm(models.ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'date', 'location', 'description', 'created_by']
+        fields = ['name', 'date', 'location', 'description']
 
 
 
