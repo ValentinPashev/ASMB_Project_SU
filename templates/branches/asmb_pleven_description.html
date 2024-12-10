@@ -1,0 +1,27 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ asmb_pleven_info.title }}</h1>
+        <p>{{ asmb_pleven_info.description }}</p>
+
+        <h2>Goals</h2>
+        <div>{{ asmb_pleven_info.goals|safe }}</div>
+
+        <h2>Activities and Initiatives</h2>
+        <div>{{ asmb_pleven_info.activities|safe }}</div>
+
+        <h2>Structure</h2>
+        <p>{{ asmb_pleven_info.structure }}</p>
+
+        <h3>Committees</h3>
+        <ul>
+            {% for committee in asmb_pleven_info.committees %}
+                <li>{{ committee }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Control Board</h3>
+        <p>{{ asmb_pleven_info.control_board }}</p>
+    </div>
+{% endblock %}

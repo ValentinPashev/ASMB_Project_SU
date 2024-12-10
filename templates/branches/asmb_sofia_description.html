@@ -1,0 +1,27 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ asmb_sofia_info.title }}</h1>
+        <p>{{ asmb_sofia_info.description }}</p>
+
+        <h2>Main Goals</h2>
+        <p>{{ asmb_sofia_info.goals }}</p>
+
+        <h2>Projects</h2>
+        <p>{{ asmb_sofia_info.projects }}</p>
+
+        <h2>Membership</h2>
+        <p>{{ asmb_sofia_info.membership }}</p>
+
+        <h2>Affiliations</h2>
+        <ul>
+            {% for affiliation in asmb_sofia_info.affiliations %}
+                <li>{{ affiliation }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Benefits of Membership</h2>
+        <p>{{ asmb_sofia_info.benefits }}</p>
+    </div>
+{% endblock %}

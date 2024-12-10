@@ -2,13 +2,13 @@ from django import forms
 from django.forms import models, formset_factory
 
 from events.mixins import DisableFieldsMixin
-from events.models import Event, Comment
+from events.models import Event, Comment, EventReport
 
 
 class EventBaseForm(models.ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'date', 'location', 'description']
+        fields = ['name', 'date', 'location', 'description', 'branch', 'type_of_event', 'is_online']
 
 
 
@@ -71,3 +71,9 @@ class CommentForm(forms.ModelForm):
         })
 
 CommentFormSet = formset_factory(CommentForm, extra=1)
+
+
+class EventReportForm(forms.ModelForm):
+    class Meta:
+        model = EventReport
+        fields = ['number_of_days', 'organizers', 'prepared', 'attended', 'participated_actively', 'points_for_organizers', 'points_for_attended', 'points_for_participated_actively']

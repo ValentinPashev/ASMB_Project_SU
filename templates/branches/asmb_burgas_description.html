@@ -1,0 +1,27 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ asmb_burgas_info.title }}</h1>
+        <p>{{ asmb_burgas_info.description }}</p>
+
+        <h2>Objectives</h2>
+        <div>{{ asmb_burgas_info.objectives|safe }}</div>
+
+        <h2>Partnerships</h2>
+        <p>{{ asmb_burgas_info.partnerships }}</p>
+
+        <h2>Structure and Committees</h2>
+        <p>{{ asmb_burgas_info.structure_and_committees }}</p>
+
+        <h3>Committees</h3>
+        <ul>
+            {% for committee in asmb_burgas_info.committees %}
+                <li>{{ committee }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Committee Focus</h3>
+        <p>{{ asmb_burgas_info.committee_focus }}</p>
+    </div>
+{% endblock %}

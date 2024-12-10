@@ -1,0 +1,28 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ asm_plovdiv_info.title }}</h1>
+        <p>{{ asm_plovdiv_info.description }}</p>
+
+        <h2>Activities and Objectives</h2>
+        <ul>
+            {% for activity in asm_plovdiv_info.activities %}
+                <li>{{ activity }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Membership</h2>
+        <p>{{ asm_plovdiv_info.membership }}</p>
+
+        <h2>Affiliations</h2>
+        <ul>
+            {% for affiliation in asm_plovdiv_info.affiliations %}
+                <li>{{ affiliation }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Benefits of Membership</h2>
+        <p>{{ asm_plovdiv_info.benefits }}</p>
+    </div>
+{% endblock %}

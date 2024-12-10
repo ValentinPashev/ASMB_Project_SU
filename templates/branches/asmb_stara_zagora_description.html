@@ -1,0 +1,27 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ asmb_stara_zagora_info.title }}</h1>
+        <p>{{ asmb_stara_zagora_info.description }}</p>
+
+        <h2>History</h2>
+        <p>{{ asmb_stara_zagora_info.history }}</p>
+
+        <h2>Management Structure</h2>
+        <p>{{ asmb_stara_zagora_info.management_structure }}</p>
+
+        <h3>Committees</h3>
+        <ul>
+            {% for committee in asmb_stara_zagora_info.committees %}
+                <li>{{ committee }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Main Objectives</h2>
+        <div>{{ asmb_stara_zagora_info.objectives|safe }}</div>
+
+        <h2>Key Activities</h2>
+        <div>{{ asmb_stara_zagora_info.activities|safe }}</div>
+    </div>
+{% endblock %}

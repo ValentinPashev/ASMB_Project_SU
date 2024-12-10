@@ -1,0 +1,45 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ asmb_sofia_university_info.title }}</h1>
+        <p>{{ asmb_sofia_university_info.description }}</p>
+
+        <h2>Structure</h2>
+        <div>{{ asmb_sofia_university_info.structure|safe }}</div>
+
+        <h2>What We Do and Why?</h2>
+        <div>{{ asmb_sofia_university_info.activities_focus|safe }}</div>
+
+        <h2>How We Work?</h2>
+        <p>{{ asmb_sofia_university_info.how_we_work }}</p>
+
+        <h2>Health Campaigns, Programs, and Initiatives</h2>
+        <div>{{ asmb_sofia_university_info.health_campaigns|safe }}</div>
+
+        <h2>Scientific Conferences</h2>
+        <p>{{ asmb_sofia_university_info.scientific_conferences }}</p>
+
+        <h2>Annual Activities</h2>
+        <h3>Informational Campaigns:</h3>
+        <ul>
+            {% for campaign in asmb_sofia_university_info.annual_activities.informational_campaigns %}
+                <li>{{ campaign }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Practical Training:</h3>
+        <ul>
+            {% for training in asmb_sofia_university_info.annual_activities.practical_training %}
+                <li>{{ training }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Seminars:</h3>
+        <ul>
+            {% for seminar in asmb_sofia_university_info.annual_activities.seminars %}
+                <li>{{ seminar }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

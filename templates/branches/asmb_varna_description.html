@@ -1,0 +1,23 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ asmb_varna_info.title }}</h1>
+        <p>{{ asmb_varna_info.description }}</p>
+
+        <h2>History</h2>
+        <p>{{ asmb_varna_info.history }}</p>
+
+        <h2>Main Goals</h2>
+        <p>{{ asmb_varna_info.goals }}</p>
+
+        <h2>Collaborations</h2>
+        <p>{{ asmb_varna_info.collaborations }}</p>
+
+        <h2>Impact</h2>
+        <p>{{ asmb_varna_info.impact }}</p>
+
+        <h2>International Exchange Program</h2>
+        <p>{{ asmb_varna_info.international_exchange }}</p>
+    </div>
+{% endblock %}
