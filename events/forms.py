@@ -76,4 +76,8 @@ CommentFormSet = formset_factory(CommentForm, extra=1)
 class EventReportForm(forms.ModelForm):
     class Meta:
         model = EventReport
-        fields = ['number_of_days', 'organizers', 'prepared', 'attended', 'participated_actively', 'points_for_organizers', 'points_for_attended', 'points_for_participated_actively']
+        fields = ['number_of_days', 'organizers', 'prepared', 'attended', 'participated_actively',
+                  'points_for_organizers',
+                  'points_for_attended',
+                  'points_for_participated_actively',
+                  'points_for_prepared',]

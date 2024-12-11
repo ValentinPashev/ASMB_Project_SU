@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.forms import modelform_factory
 from django.http import HttpResponseForbidden
@@ -7,6 +8,8 @@ from django.views.generic import CreateView, ListView, FormView, DetailView, Upd
 from accounts.models import Profile
 from events.forms import CreateEventForm, SearchForm, CommentFormSet, DeleteEventForm, EventReportForm
 from events.models import Event, EventReport
+from students.models import ActivityLog
+from django.utils.timezone import now
 
 
 # Create your views here.
@@ -121,9 +124,8 @@ class DeleteEventView(DeleteView, FormView):
 
 def pass_event_report(request, pk):
     event = get_object_or_404(Event, pk=pk)
-    print(request.user.get_user_permissions())
 
-    if event.created_by != request.user.email:
+    if not request.user.can_make_reports and event.created_by != request.user.email:
         return HttpResponseForbidden("This event was created by another user.")
 
     if request.method == 'POST':
@@ -132,7 +134,7 @@ def pass_event_report(request, pk):
             event_report = form.save(commit=False)
             event_report.event = event
             event_report.save()
-            distribute_points_from_event(event_report, pk)
+            distribute_points_from_event(request, event_report, pk)
             return redirect('index')
 
         context = {'form': form, 'event': event}
@@ -143,46 +145,57 @@ def pass_event_report(request, pk):
     return render(request, 'events/event_report.html', context)
 
 
-def distribute_points_from_event(event_report, pk):
+def distribute_points_from_event(request, event_report, pk):
+    event = get_object_or_404(Event, pk=pk)
+
     if not isinstance(event_report, EventReport):
-        raise ValueError("The event_report must be a Event instance.")
+        messages.error(request, "The event_report must be an Event instance.")
+        return
 
     if event_report.completed:
-        raise ValueError("The event_report is already completed.")
+        messages.error(request, "The event_report is already completed.")
+        return
 
     User = get_user_model()
-    organizers = event_report.organizers.split(', ')
+    roles_and_points = {
+        "organizers": event_report.points_for_organizers,
+        "prepared": event_report.points_for_prepared,
+        "participated_actively": event_report.points_for_participated_actively,
+        "attended": event_report.points_for_attended,
+    }
     list_with_user_points = []
+    emails_do_no_exist = []
 
-    for email in organizers:
-        try:
-            user = User.objects.get(email=email)
-            profile = Profile.objects.get(user=user)
-            if user not in list_with_user_points:
-                profile.points_from_events += event_report.points_for_organizers
-                profile.save()
-                list_with_user_points.append(user)
+    for role, points in roles_and_points.items():
+        emails = getattr(event_report, role).split(' ')
+        for email in emails:
+            try:
+                user = User.objects.get(email=email)
+                profile = Profile.objects.get(user=user)
+                if user not in list_with_user_points:
+                    profile.points_from_events += points
+                    profile.save()
 
-        except User.DoesNotExist:
-            print(f"User with email {email} does not exist. Check for errors!")
 
+                    ActivityLog.objects.create(
+                        profile=profile,
+                        message=f"Присъствал на {event.name}, като {role} ----> {points} точки.",
+                        timestamp=now()
+                    )
+
+                    list_with_user_points.append(user)
+                    messages.success(request, f"Точки добавени за {email} ({role}): {points} точки.")
+            except User.DoesNotExist:
+                emails_do_no_exist.append(email)
+
+    if emails_do_no_exist:
+        messages.error(request, f"Съответните имейли {[e for e in emails_do_no_exist]} не бяха намерени!")
 
     event_report.completed = True
     event_report.save()
-    event = Event.objects.get(pk=pk)
     event.completed = True
     event.save()
 
+    messages.success(request, f"Разпределението на точките за събитието {event.name} е завършено успешно.")
 
-# class EventReportDashBoardView(ListView):
-#     template_name = 'event_reports/dashboard.html'
-#     context_object_name = 'event_reports'
-#     paginate_by = 8
-#     model = EventReport
-#     success_url = reverse_lazy('dash')
-#
-#     def get_queryset(self):
-#         queryset = self.model.objects.all()
-#
 
-#to be continued!!!

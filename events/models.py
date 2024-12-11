@@ -60,6 +60,7 @@ class Event(models.Model):
         permissions = [
             ('can_approve_events', 'Can approve event'),
             ('can_make_report', 'Can make report'),
+            ('can_see_report', 'Can see report'),
         ]
     def __str__(self):
         return self.name

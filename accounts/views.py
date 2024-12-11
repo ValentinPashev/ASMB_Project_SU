@@ -1,4 +1,3 @@
-from django.contrib.auth import login
 from django.http import HttpResponseRedirect
 from django.shortcuts import  render
 from django.urls import reverse_lazy
@@ -6,7 +5,6 @@ from django.views.generic import CreateView
 from accounts.forms import CustomStudentFrom, ProfileCreationForm
 
 
-# Create your views here.
 class RegisterView(CreateView):
     form_class = CustomStudentFrom
     template_name = 'registration/register.html'
@@ -23,23 +21,25 @@ def create_profile_or_display_view(request):
     ])
 
     if is_profile_complete:
-
+        activity_logs = profile.activity_logs.all()
         context = {
-            'profile': profile
+            'profile': profile,
+            'activity_logs': activity_logs,
         }
         return render(request, 'accounts/profile_details.html', context)
-    else:
 
+    else:
         if request.method == 'POST':
             form = ProfileCreationForm(request.POST, request.FILES, instance=profile)
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect(reverse_lazy('index'))
+                return HttpResponseRedirect(reverse_lazy('profile'))
         else:
             form = ProfileCreationForm(instance=profile)
-
+            print(form.errors)
 
         context = {
-            'form': form
+            'form': form,
         }
         return render(request, 'accounts/complete_profile_page.html', context)
+

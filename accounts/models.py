@@ -35,6 +35,10 @@ class AppStudent(AbstractBaseUser, PermissionsMixin):
             "Unselect this instead of deleting accounts."
         ),
     )
+    
+    can_make_reports = models.BooleanField(
+        default=False,
+    )
 
     objects = AppStudentManager()
 
@@ -77,3 +81,5 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+

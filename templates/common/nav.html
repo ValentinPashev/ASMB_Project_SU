@@ -34,15 +34,16 @@
         </a>
     </li>
     {% endif %}
+
     <li class="menu-item">    
-        <a href="#" class="menu-link">
+        <a href="{% url 'event_report_display' %}" class="menu-link">
             <i class="ai-gear"></i>
-            <span>Settings</span>
+            <span>Reports</span>
         </a>
     </li>
     {% if request.user.is_authenticated %}
     <li class="menu-item">
-        <a href="{% url 'update_profile' %}" class="menu-link">
+        <a href="{% url 'profile' %}" class="menu-link">
             <i class="ai-person"></i>
             <span>Profile</span>
         </a>

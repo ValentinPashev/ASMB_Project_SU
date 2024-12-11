@@ -1,20 +1,8 @@
-from django.contrib.auth import get_user_model
 from django.db import models
+from accounts.models import Profile
 
-# Create your models here.
 
-UserModel = get_user_model()
-
-class Student(models.Model):
-    full_name = models.CharField(
-        max_length=100
-    ),
-
-    faculty_number = models.CharField(
-        max_length=100
-    )
-
-    # user = models.ForeignKey(
-    #     to=UserModel,
-    #     on_delete=models.CASCADE,
-    # )
+class ActivityLog(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="activity_logs")
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)

@@ -63,3 +63,21 @@ body {
 .btn:hover {
     background: #0056b3;
 }
+
+
+.activity-log-section {
+    font-size: 16px;
+}
+
+.activity-log-section p {
+    font-size: 18px;
+}
+
+.activity-log-section strong {
+    font-size: 30px;
+}
+
+.activity-log-section li {
+    margin-bottom: 30px;
+
+}
