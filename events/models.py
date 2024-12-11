@@ -61,6 +61,7 @@ class Event(models.Model):
             ('can_approve_events', 'Can approve event'),
             ('can_make_report', 'Can make report'),
             ('can_see_report', 'Can see report'),
+            ('can_edit_report', 'Can edit report'),
         ]
     def __str__(self):
         return self.name
@@ -89,6 +90,11 @@ class EventReport (models.Model):
         Event,
         on_delete=models.CASCADE,
         related_name='reports',
+    )
+
+    name = models.CharField(
+        max_length=150,
+        default='Student meeting'
     )
 
     number_of_days = models.IntegerField(

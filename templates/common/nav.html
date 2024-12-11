@@ -34,18 +34,19 @@
         </a>
     </li>
     {% endif %}
-
-    <li class="menu-item">    
-        <a href="{% url 'event_report_display' %}" class="menu-link">
-            <i class="ai-gear"></i>
-            <span>Reports</span>
-        </a>
-    </li>
     {% if request.user.is_authenticated %}
     <li class="menu-item">
         <a href="{% url 'profile' %}" class="menu-link">
             <i class="ai-person"></i>
             <span>Profile</span>
+        </a>
+    </li>
+    {% endif %}
+        {% if request.user.is_authenticated %}
+    <li class="menu-item">
+        <a href="{% url 'dash_reports' %}" class="menu-link">
+            <i class="ai-book"></i>
+            <span>Reports</span>
         </a>
     </li>
     {% endif %}

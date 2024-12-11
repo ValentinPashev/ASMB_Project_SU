@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.core.exceptions import PermissionDenied
 from django.forms import modelform_factory
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, render, get_object_or_404
@@ -35,7 +36,6 @@ class DashboardView(ListView, FormView):
 
     def get_queryset(self):
         queryset = self.model.objects.all()
-        print(self.request.user.get_user_permissions())
 
 
         if 'events.can_approve_events' not in self.request.user.get_group_permissions() or not self.request.user.has_perm('events.can_approve_events'):
@@ -45,7 +45,7 @@ class DashboardView(ListView, FormView):
 
         if 'query' in self.request.GET:
             query = self.request.GET.get('query')
-            queryset = self.queryset.filter(title__icontains=query)
+            queryset = queryset.filter(name__icontains=query)
 
         return queryset
 
@@ -199,3 +199,35 @@ def distribute_points_from_event(request, event_report, pk):
     messages.success(request, f"Разпределението на точките за събитието {event.name} е завършено успешно.")
 
 
+class EventReportListView(ListView):
+    model = EventReport
+    template_name = 'event_reports/event_report_list.html'
+    context_object_name = 'reports'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['extra_info'] = 'Some additional context for the list view.'
+        return context
+
+class EventReportDetailView(DetailView):
+    model = EventReport
+    template_name = 'event_reports/event_report_detail.html'
+    context_object_name = 'report'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+class EventReportUpdateView(UpdateView):
+    model = EventReport
+    form_class = EventReportForm
+    template_name = 'event_reports/event_report_edit.html'
+    success_url = reverse_lazy('event-report-list')
+
+    def get_form_class(self):
+        print(self.request.user.get_user_permissions())
+        if self.request.user.is_superuser or self.request.user.has_perm('events.can_edit_report'):
+            return modelform_factory(EventReport, fields='__all__')
+
+        else:
+            raise PermissionDenied("You do not have permission to access this page.")

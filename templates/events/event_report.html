@@ -8,9 +8,9 @@
 </head>
 <body>
 {% block content %}
-    <h1> Отчет </h1>
+    <h1> Report </h1>
     <form method="post" enctype="multipart/form-data">
-        {{ form }}
+        {{ form.as_p }}
         {% csrf_token %}
         <button class="button-9">Submit</button>
     </form>

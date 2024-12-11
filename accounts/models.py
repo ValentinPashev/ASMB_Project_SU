@@ -4,12 +4,13 @@ from django.db import models
 from accounts.choices import BranchChoices
 from django.utils.translation import gettext_lazy as _
 from accounts.managers import AppStudentManager
-
+from accounts.validators import CustomEmailValidator
 
 
 class AppStudent(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
-        unique=True
+        unique=True,
+        validators=[CustomEmailValidator(allowed_domains=['gmail.com', 'abv.bg', 'yahoo.com', 'outlook.com'])],
     )
 
     username = models.CharField(

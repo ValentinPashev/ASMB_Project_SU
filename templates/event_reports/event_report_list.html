@@ -1,0 +1,18 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <h1>Event Reports</h1>
+    <ul>
+        {% for report in reports %}
+            <li>
+                <a id="event-url" href="{% url 'event-report-detail' report.pk %}">
+                    <div class="event">
+                        <h2>{{ report.name }}</h2>
+                    </div>
+                </a>
+            </li>
+        {% empty %}
+            <p>No event reports found.</p>
+        {% endfor %}
+    </ul>
+{% endblock %}
