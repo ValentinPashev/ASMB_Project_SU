@@ -1,0 +1,37 @@
+.info-box {
+    border: 2px solid #2980b9;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.info-box h1, .info-box h2, .info-box h3 {
+    color: #2980b9;
+    font-weight: bold;
+}
+
+.info-box p, .info-box ul {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.info-box ul {
+    margin-left: 20px;
+}
+
+.info-box ul li {
+    margin-bottom: 5px;
+}
+
+/* Разстояние между различни секции */
+.info-box h2 {
+    margin-top: 30px;
+}
+
+/* Падащо разстояние между параграфи и елементи */
+.info-box p, .info-box div {
+    margin-bottom: 20px;
+}

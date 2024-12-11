@@ -76,20 +76,21 @@ CommentFormSet = formset_factory(CommentForm, extra=1)
 class EventReportForm(forms.ModelForm):
     class Meta:
         model = EventReport
-        fields = ['name','number_of_days', 'organizers', 'prepared', 'attended', 'participated_actively',
+        fields = ['name','number_of_days', 'organizers', 'prepared', 'attended',   'participated_actively',
                   'points_for_organizers',
+                  'points_for_prepared',
                   'points_for_attended',
                   'points_for_participated_actively',
-                  'points_for_prepared',]
+                  ]
 
         widgets = {
             'organizers': forms.TextInput(attrs={
                 'placeholder': 'example: test1@abv.bg test2@gamil.com test3@yahoo.com',
-                'title': 'the emails must be splited by space!'
+                'title': 'the emails must be splited by space! There can maximum 3 people!'
             }),
             'prepared': forms.TextInput(attrs={
                 'placeholder': 'example: test1@abv.bg test2@gamil.com test3@yahoo.com',
-                'title': 'the emails must be splited by space!'
+                'title': 'the emails must be splited by space! There can maximum 1 person!'
             }),
             'attended': forms.TextInput(attrs={
                 'placeholder': 'example: test1@abv.bg test2@gamil.com test3@yahoo.com',

@@ -165,16 +165,26 @@ def distribute_points_from_event(request, event_report, pk):
     }
     list_with_user_points = []
     emails_do_no_exist = []
+    organizers_count = 0
+    prepared_count = 0
 
     for role, points in roles_and_points.items():
         emails = getattr(event_report, role).split(' ')
         for email in emails:
             try:
+                if ((role == 'organizers' and organizers_count == 3) or
+                        (role == 'prepared' and prepared_count == 1)):
+                    continue
+
                 user = User.objects.get(email=email)
                 profile = Profile.objects.get(user=user)
                 if user not in list_with_user_points:
                     profile.points_from_events += points
                     profile.save()
+                    if role == 'organizers':
+                        organizers_count += 1
+                    elif role == 'prepared':
+                        prepared_count += 1
 
 
                     ActivityLog.objects.create(
