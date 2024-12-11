@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+
     <style>
         body {
             background-image: url("{% static 'backgroud/back_g.jpg' %}");
@@ -29,29 +30,7 @@
 </head>
 <body>
     {% include 'common/nav.html' %}
-
-    <script>
-        {% if messages %}
-            {% for message in messages %}
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": true,
-                    "positionClass": "toast-top-right",
-                    "timeOut": "5000"
-                };
-                {% if message.tags == 'error' %}
-                    toastr.error("{{ message }}");
-                {% elif message.tags == 'success' %}
-                    toastr.success("{{ message }}");
-                {% elif message.tags == 'warning' %}
-                    toastr.warning("{{ message }}");
-                {% else %}
-                    toastr.info("{{ message }}");
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    </script>
-
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2 p-3"></div>
